@@ -14,7 +14,16 @@ function isValid(x, y, visited) {
   return boardValidity && visitedNode;
 }
 
-// Validate the knight moves to avoid knight moves outside the board
+function compareArray(arr1, arr2) {
+  if (typeof arr1 !== 'object' || typeof arr2 !== 'object') return false;
+  if (arr1.length !== arr2.length) return false;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
 
 // Save all possible directions for knight to moves /
 // Possible neighbor vertices
@@ -47,6 +56,10 @@ function knightMoves(start, end) {
     // Get current location of knight from queue
     let [currentX, currentY] = queue.shift();
     visitedNode.push([currentX, currentY]);
+    // Exit loop when node is found
+    if (currentX === end[0] && currentY === end[1]) {
+      break;
+    }
     // check for all possible knight directions
     knightDirections.forEach((direction) => {
       let [nextPosX, nextPosY] = direction;
@@ -68,7 +81,7 @@ function knightMoves(start, end) {
   const path = [];
   let targetParent = target;
   // Do looping until targett find path to starting node
-  while (targetParent[0] !== start[0] && targetParent[1] !== start[1]) {
+  while (!compareArray(targetParent, start)) {
     path.push(targetParent);
     // Find parent of the target node
     targetParent = parentNode[`${targetParent[0]}, ${targetParent[1]}`];
@@ -81,3 +94,4 @@ function knightMoves(start, end) {
 console.log(knightMoves([0, 0], [3, 3]));
 console.log(knightMoves([3, 3], [0, 0]));
 console.log(knightMoves([0, 0], [7, 7]));
+console.log(knightMoves([7, 7], [0, 0]));
