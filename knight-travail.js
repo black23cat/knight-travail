@@ -30,6 +30,13 @@ const knightDirections = [
 ];
 
 function knightMoves(start, end) {
+  if (
+    start.length !== 2 ||
+    end.length !== 2 ||
+    typeof start !== 'object' ||
+    typeof end !== 'object'
+  )
+    return;
   // initialize queue for every node that will be traversed
   const queue = [start];
   // Save visited node from queue
